@@ -1,4 +1,37 @@
+'use client'
+
+import { useState } from "react"
+
+type Match = {
+  'team-1-name': string,
+  'team-2-name': string,
+  'team-1-score': number,
+  'team-2-score': number
+}
+
 export default function Home() {
+  const [firstTeamName, setFirstTeamName] = useState('')
+  const [secondTeamName, setSecondTeamName] = useState('')
+
+  const [firstTeamScore, setFirstTeamScore] = useState(0)
+  const [secondTeamScore, setSecondTeamScore] = useState(0)
+
+  const [matches, setMatches] = useState<Match[]>([])
+
+  const addToScoreTable = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (firstTeamName.trim() !== '' && secondTeamName.trim() !== '') {
+      const match: Match = { "team-1-name": firstTeamName, "team-1-score": firstTeamScore, "team-2-name": secondTeamName, "team-2-score": secondTeamScore }
+
+      setMatches([...matches, match])
+      setFirstTeamName('')
+      setFirstTeamScore(0)
+      setSecondTeamName('')
+      setSecondTeamScore(0)
+    }
+  }
+
+
   return (
     <main className="bg-main-primary rounded-lg m-16 shadow-2xl">
       <section className="container mx-auto p-8 flex flex-col gap-10">
@@ -9,14 +42,14 @@ export default function Home() {
 
       <section className="container mx-auto p-8 flex flex-col gap-10">
         <div className="border border-main-secondary rounded shadow-2xl grid-col-3">
-          <form className="m-6 flex justify-around">
+          <form className="m-6 flex justify-around" onSubmit={addToScoreTable}>
             <div className="flex gap-2">
-              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 1" />
-              <input className="p-2 rounded-r ring-2 outline-0" type="number" placeholder="Pontuação time 1" />
+              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 1" value={firstTeamName} onChange={e => setFirstTeamName(e.target.value)} />
+              <input className="p-2 rounded-r ring-2 outline-0" type="number" min={0} placeholder="Pontuação time 1" value={firstTeamScore} onChange={e => setFirstTeamScore(Number(e.target.value))} />
             </div>
             <div className="flex gap-2">
-              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 2" />
-              <input className="p-2 rounded-r ring-2 outline-0" type="number" placeholder="Pontuação time 2" />
+              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 2" value={secondTeamName} onChange={e => setSecondTeamName(e.target.value)} />
+              <input className="p-2 rounded-r ring-2 outline-0" type="number" placeholder="Pontuação time 2" value={secondTeamScore} onChange={e => setSecondTeamScore(Number(e.target.value))} />
             </div>
             <button className="shadow rounded bg-main-secondary px-4 hover:bg-main-accent font-bold text-white" type="submit">Adicionar</button>
           </form>
@@ -43,22 +76,23 @@ export default function Home() {
               </tr>
             </thead>
             <tbody className="font-medium text-gray-900">
-              <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+              {matches.map((match, index) =>
+              (<tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700" key={index}>
                 <td scope="row" className="px-6 py-4 whitespace-nowrap dark:text-white bg-gray-50 dark:bg-gray-800 border-r-2 border-main-secondary">
-                  ACB 1
+                  {match["team-1-name"]}
                 </td>
                 <td className="px-6 py-4 border-r-2 border-main-secondary flex justify-between font-medium whitespace-nowrap">
-                  <h2>13</h2>
-                  <h2>8</h2>
+                  <h2 className={match["team-1-score"] >= match["team-2-score"] ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'}>{match["team-1-score"]}</h2>
+                  <h2 className={match["team-2-score"] >= match["team-1-score"] ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'}>{match["team-2-score"]}</h2>
                 </td>
                 <td className="px-6 py-4 bg-gray-50 border-r-2 border-main-secondary">
-                  ACB 2
+                  {match["team-2-name"]}
                 </td>
                 <td className="px-6 py-4">
                   DELETAR
                 </td>
-              </tr>
-
+              </tr>)
+              )}
             </tbody>
           </table>
         </div>
