@@ -11,12 +11,12 @@ export default function Home() {
         <div className="border border-main-secondary rounded shadow-2xl grid-col-3">
           <form className="m-6 flex justify-around">
             <div className="flex gap-2">
-              <input className="p-2 rounded-l ring-2" type="text" placeholder="Nome do time 1" />
-              <input className="p-2 rounded-r ring-2" type="number" placeholder="Pontuação time 1" />
+              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 1" />
+              <input className="p-2 rounded-r ring-2 outline-0" type="number" placeholder="Pontuação time 1" />
             </div>
             <div className="flex gap-2">
-              <input className="p-2 rounded-l ring-2" type="text" placeholder="Nome do time 2" />
-              <input className="p-2 rounded-r ring-2" type="number" placeholder="Pontuação time 2" />
+              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 2" />
+              <input className="p-2 rounded-r ring-2 outline-0" type="number" placeholder="Pontuação time 2" />
             </div>
             <button className="shadow rounded bg-main-secondary px-4 hover:bg-main-accent font-bold text-white" type="submit">Adicionar</button>
           </form>
