@@ -1,13 +1,9 @@
 'use client'
 
+import { fetchData } from "@/lib/GateballAPI"
+import { Match } from "@/types/MatchType"
 import { useState } from "react"
 
-type Match = {
-  'team-1-name': string,
-  'team-2-name': string,
-  'team-1-score': number,
-  'team-2-score': number
-}
 
 export default function Home() {
   const [firstTeamName, setFirstTeamName] = useState('')
@@ -30,6 +26,17 @@ export default function Home() {
       setSecondTeamScore(0)
     }
   }
+
+  const [data, setData] = useState<any[]>([]);
+  const handleFetchData = async () => {
+    try {
+      const fetchedData = await fetchData(matches);
+      console.log(fetchData)
+      setData(fetchedData);
+    } catch (error) {
+      // Handle error if needed
+    }
+  };
 
 
   return (
@@ -95,6 +102,17 @@ export default function Home() {
               )}
             </tbody>
           </table>
+
+          {matches.length
+            ? (
+              <div className="flex justify-center" >
+                <button className="shadow rounded bg-main-secondary py-2 px-4 hover:bg-main-accent font-bold text-white my-4" onClick={handleFetchData}>
+                  Confirmar Fase
+                </button>
+              </div>
+            )
+            : ''}
+
         </div>
       </section>
     </main>
