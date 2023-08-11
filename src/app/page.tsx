@@ -1,6 +1,7 @@
 'use client'
 
 import { fetchData } from "@/lib/GateballAPI"
+import { TeamData } from "@/types/GateballAPITypes"
 import { Match } from "@/types/MatchType"
 import { useState } from "react"
 
@@ -27,12 +28,15 @@ export default function Home() {
     }
   }
 
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Match[]>([]);
   const handleFetchData = async () => {
     try {
-      const fetchedData = await fetchData(matches);
-      console.log(fetchData)
-      setData(fetchedData);
+      const fetchedData: TeamData[] = await fetchData(matches);
+      fetchedData.map((team, index) => {
+        console.log(team)
+      })
+
+      // setData(fetchedData);
     } catch (error) {
       // Handle error if needed
     }
