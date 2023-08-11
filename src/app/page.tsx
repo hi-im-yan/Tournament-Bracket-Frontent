@@ -28,17 +28,13 @@ export default function Home() {
     }
   }
 
-  const [data, setData] = useState<Match[]>([]);
+  const [teamsData, setTeamsData] = useState<TeamData[]>([]);
   const handleFetchData = async () => {
     try {
       const fetchedData: TeamData[] = await fetchData(matches);
-      fetchedData.map((team, index) => {
-        console.log(team)
-      })
-
-      // setData(fetchedData);
+      setTeamsData(fetchedData);
     } catch (error) {
-      // Handle error if needed
+      console.log("failed to fetch data from api")
     }
   };
 
@@ -92,9 +88,11 @@ export default function Home() {
                 <td scope="row" className="px-6 py-4 whitespace-nowrap dark:text-white bg-gray-50 dark:bg-gray-800 border-r-2 border-main-secondary">
                   {match["team-1-name"]}
                 </td>
-                <td className="px-6 py-4 border-r-2 border-main-secondary flex justify-between font-medium whitespace-nowrap">
-                  <h2 className={match["team-1-score"] >= match["team-2-score"] ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'}>{match["team-1-score"]}</h2>
-                  <h2 className={match["team-2-score"] >= match["team-1-score"] ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'}>{match["team-2-score"]}</h2>
+                <td className="px-6 py-4 border-r-2 border-main-secondary">
+                  <div className="flex justify-around font-bold">
+                    <h2 className={match["team-1-score"] >= match["team-2-score"] ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'}>{match["team-1-score"]}</h2>
+                    <h2 className={match["team-2-score"] >= match["team-1-score"] ? 'text-blue-400 font-bold' : 'text-red-400 font-bold'}>{match["team-2-score"]}</h2>
+                  </div>
                 </td>
                 <td className="px-6 py-4 bg-gray-50 border-r-2 border-main-secondary">
                   {match["team-2-name"]}
@@ -117,6 +115,65 @@ export default function Home() {
             )
             : ''}
 
+        </div>
+      </section>
+
+      <section className="container mx-auto p-8 flex flex-col gap-10">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-main-secondary">
+          <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400 ">
+            <thead className="text-xs text-gray-700 uppercase bg-sky-200 dark:bg-gray-700 dark:text-gray-400">
+              <tr className="">
+                <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
+                  Posição
+                </th>
+                <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
+                  Nome Equipe
+                </th>
+                <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
+                  Vitórias
+                </th>
+                <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
+                  Derrotas
+                </th>
+                <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
+                  Pontos obtidos
+                </th>
+                <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
+                  Pontos cedidos
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Saldo de pontos
+                </th>
+              </tr>
+            </thead>
+            <tbody className="font-medium text-gray-900">
+              {teamsData.map((teamData, index) =>
+              (<tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700" key={index}>
+                <td scope="row" className="px-6 py-4 whitespace-nowrap dark:text-white bg-gray-50 dark:bg-gray-800 border-r-2 border-main-secondary">
+                  {index + 1}º
+                </td>
+                <td className="px-6 py-4 border-r-2 border-main-secondary">
+                  {teamData.teamName}
+                </td>
+                <td className="px-6 py-4 border-r-2  bg-gray-50 border-main-secondary">
+                  {teamData.victoryCounter}
+                </td>
+                <td className="px-6 py-4 border-r-2 border-main-secondary">
+                  {teamData.defeatCounter}
+                </td>
+                <td className="px-6 py-4 bg-gray-50 border-r-2 border-main-secondary">
+                  {teamData.pointsMade}
+                </td>
+                <td className="px-6 py-4 border-r-2 border-main-secondary">
+                  {teamData.pointsSuffered}
+                </td>
+                <td className="px-6 py-4 bg-gray-50 border-r-2 border-main-secondary">
+                  {teamData.pointsBalance}
+                </td>
+              </tr>)
+              )}
+            </tbody>
+          </table>
         </div>
       </section>
     </main>
