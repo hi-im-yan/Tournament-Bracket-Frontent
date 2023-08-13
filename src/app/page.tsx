@@ -3,6 +3,7 @@
 import { fetchData } from "@/lib/GateballAPI"
 import { TeamData } from "@/types/GateballAPITypes"
 import { Match } from "@/types/MatchType"
+import { Trash2 } from "lucide-react"
 import { useState } from "react"
 
 
@@ -38,6 +39,11 @@ export default function Home() {
     }
   };
 
+  const deleteMatch = (index: number) => {
+    const updatedMatches = [...matches];
+    updatedMatches.splice(index, 1);
+    setMatches(updatedMatches);
+  }
 
   return (
     <main className="bg-main-primary rounded-lg m-16 shadow-2xl">
@@ -98,7 +104,7 @@ export default function Home() {
                   {match["team-2-name"]}
                 </td>
                 <td className="px-6 py-4">
-                  DELETAR
+                  <button className="px-2 py-1 bg-red-400 rounded rounded-lg" onClick={e => deleteMatch(index)}><Trash2 /></button>
                 </td>
               </tr>)
               )}
@@ -136,6 +142,9 @@ export default function Home() {
                   Derrotas
                 </th>
                 <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
+                  Empates
+                </th>
+                <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
                   Pontos obtidos
                 </th>
                 <th scope="col" className="px-6 py-3 border-r-2 border-main-secondary">
@@ -149,22 +158,25 @@ export default function Home() {
             <tbody className="font-medium text-gray-900">
               {teamsData.map((teamData, index) =>
               (<tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700" key={index}>
-                <td scope="row" className="px-6 py-4 whitespace-nowrap dark:text-white bg-gray-50 dark:bg-gray-800 border-r-2 border-main-secondary">
+                <td scope="row" className="px-6 py-4 whitespace-nowrap dark:text-white bg-gray-100 dark:bg-gray-800 border-r-2 border-main-secondary">
                   {index + 1}º
                 </td>
-                <td className="px-6 py-4 border-r-2 border-main-secondary">
+                <td className={`px-6 py-4 border-r-2 border-main-secondary`}>
                   {teamData.teamName}
                 </td>
-                <td className="px-6 py-4 border-r-2  bg-gray-50 border-main-secondary">
+                <td className={`px-6 py-4 border-r-2 border-main-secondary bg-gray-100`}>
                   {teamData.victoryCounter}
                 </td>
-                <td className="px-6 py-4 border-r-2 border-main-secondary">
+                <td className={`px-6 py-4 border-r-2 border-main-secondary`}>
                   {teamData.defeatCounter}
                 </td>
-                <td className="px-6 py-4 bg-gray-50 border-r-2 border-main-secondary">
+                <td className={`px-6 py-4 border-r-2 border-main-secondary bg-gray-100`}>
+                  {teamData.drawCounter}
+                </td>
+                <td className={`px-6 py-4 border-r-2 border-main-secondary`}>
                   {teamData.pointsMade}
                 </td>
-                <td className="px-6 py-4 border-r-2 border-main-secondary">
+                <td className={`px-6 py-4 border-r-2 border-main-secondary bg-gray-100`}>
                   {teamData.pointsSuffered}
                 </td>
                 <td className="px-6 py-4 bg-gray-50 border-r-2 border-main-secondary">
