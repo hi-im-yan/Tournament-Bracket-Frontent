@@ -55,16 +55,28 @@ export default function Home() {
 
       <section className="container mx-auto p-8 flex flex-col gap-10">
         <div className="border border-main-secondary rounded shadow-2xl grid-col-3">
-          <form className="m-6 flex justify-around" onSubmit={addToScoreTable}>
-            <div className="flex gap-2">
-              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 1" value={firstTeamName} onChange={e => setFirstTeamName(e.target.value)} />
-              <input className="p-2 rounded-r ring-2 outline-0" type="number" min={0} placeholder="Pontuação time 1" value={firstTeamScore} onChange={e => setFirstTeamScore(Number(e.target.value))} />
+          <form className="m-6 flex flex-col gap-4 lg:justify-around lg:flex-row" onSubmit={addToScoreTable}>
+            <div className="flex gap-2 justify-between">
+              <div className="flex flex-col">
+                <label className="font-semi-bold">Nome do time 1</label>
+                <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 1" value={firstTeamName} onChange={e => setFirstTeamName(e.target.value)} />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-semi-bold">Pontos do time 1</label>
+                <input className="p-2 rounded-r ring-2 outline-0" type="number" min={0} placeholder="Pontuação time 1" value={firstTeamScore} onChange={e => setFirstTeamScore(Number(e.target.value))} />
+              </div>
             </div>
-            <div className="flex gap-2">
-              <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 2" value={secondTeamName} onChange={e => setSecondTeamName(e.target.value)} />
-              <input className="p-2 rounded-r ring-2 outline-0" type="number" placeholder="Pontuação time 2" value={secondTeamScore} onChange={e => setSecondTeamScore(Number(e.target.value))} />
+            <div className="flex gap-2 justify-between">
+              <div className="flex flex-col">
+                <label className="font-semi-bold">Nome do time 2</label>
+                <input className="p-2 rounded-l ring-2 outline-0" type="text" placeholder="Nome do time 2" value={secondTeamName} onChange={e => setSecondTeamName(e.target.value)} />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-semi-bold">Pontos do time 2</label>
+                <input className="p-2 rounded-r ring-2 outline-0" type="number" placeholder="Pontuação time 2" value={secondTeamScore} onChange={e => setSecondTeamScore(Number(e.target.value))} />
+              </div>
             </div>
-            <button className="shadow rounded bg-main-secondary px-4 hover:bg-main-accent font-bold text-white" type="submit">Adicionar</button>
+            <button className="shadow rounded bg-main-secondary px-4 py-2 hover:bg-main-accent font-bold text-white" type="submit">Adicionar</button>
           </form>
         </div>
       </section>
@@ -179,7 +191,7 @@ export default function Home() {
                 <td className={`px-6 py-4 border-r-2 border-main-secondary bg-gray-100`}>
                   {teamData.pointsSuffered}
                 </td>
-                <td className="px-6 py-4 bg-gray-50 border-r-2 border-main-secondary">
+                <td className="px-6 py-4 bg-gray-50 border-r-2">
                   {teamData.pointsBalance}
                 </td>
               </tr>)
